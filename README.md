@@ -1,9 +1,9 @@
-﻿# startupfunding
+﻿# G
 
 Run the following Git command to download the `git` package:
 
 ```sh
-$ git clone https://github.com/filmangullo/startupfunding-golang-backend.git StartupFunding
+$ git clone https://github.com/filmangullo/Golang-Project-Structure.git MyProjectGolang
 ```
 
 ﻿# The Go Programming Language
@@ -21,6 +21,48 @@ Unless otherwise noted, the Go source files are distributed under the
 BSD-style license found in the LICENSE file.
 
 ### Download and Install
+
+#### Getting Gin
+
+With [Go module](https://github.com/golang/go/wiki/Modules) support, simply add the following import
+
+```
+import "github.com/gin-gonic/gin"
+```
+
+to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
+
+Otherwise, run the following Go command to install the `gin` package:
+
+```sh
+$ go get -u github.com/gin-gonic/gin
+```
+
+#### Getting Gorm
+
+* GORM Guides [https://gorm.io](https://gorm.io)
+* Gen Guides [https://gorm.io/gen/index.html](https://gorm.io/gen/index.html)
+
+Intall gorm documentation
+
+```sh
+$ go get -u gorm.io/gorm
+```
+
+With [Connecting to a Database](https://gorm.io/docs/connecting_to_the_database.html) GORM officially supports the databases MySQL, PostgreSQL, SQLite, SQL Server, and TiDB
+
+Gorm install with :
+* Mysql database 
+
+```sh
+$ go get -u gorm.io/driver/mysql
+```
+
+* SQLite database 
+
+```sh
+$ go get -u gorm.io/driver/sqlite
+```
 
 #### Binary Distributions
 
