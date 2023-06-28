@@ -38,6 +38,18 @@ Otherwise, run the following Go command to install the `gin` package:
 $ go get -u github.com/gin-gonic/gin
 ```
 
+#### Getting GoDotEnv
+
+A Go (golang) port of the Ruby dotenv project (which loads env vars from a .env file).
+
+* Env Guides [https://github.com/joho/godotenv](https://github.com/joho/godotenv)
+
+Intall GoDotEnv documentation
+
+```sh
+$ go get github.com/joho/godotenv
+```
+
 #### Getting Gorm
 
 * GORM Guides [https://gorm.io](https://gorm.io)
@@ -56,6 +68,12 @@ Gorm install with :
 
 ```sh
 $ go get -u gorm.io/driver/mysql
+```
+
+* PostgreSQL database 
+
+```sh
+$ go get gorm.io/driver/postgres
 ```
 
 * SQLite database 
