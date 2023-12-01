@@ -1,4 +1,4 @@
-﻿# G
+﻿# Golang-Project-Structure
 
 Run the following Git command to download the `git` package:
 
@@ -6,7 +6,7 @@ Run the following Git command to download the `git` package:
 $ git clone https://github.com/filmangullo/Golang-Project-Structure.git MyProjectGolang
 ```
 
-# The Go Programming Language
+### The Go Programming Language
 
 Go is an open source programming language that makes it easy to build simple,
 reliable, and efficient software.
@@ -111,7 +111,7 @@ for source installation instructions.
 
 ### Run
 
-After installing "air" you don't need to run "$ go run ." but just "air"
+After installing "air" you don't need to run "$ go run ." but just "$ air"
 
 For less typing, you could add `alias air='~/.air'` to your `.bashrc` or `.zshrc`.
 
