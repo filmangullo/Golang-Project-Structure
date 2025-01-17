@@ -37,7 +37,7 @@ to your code, and then `go [build|run|test]` will automatically fetch the necess
 Otherwise, run the following Go command to install the `gin` package:
 
 ```sh
-$ go get -u github.com/gin-gonic/gin
+go get -u github.com/gin-gonic/gin
 ```
 
 #### Getting GoDotEnv
@@ -49,7 +49,7 @@ A Go (golang) port of the Ruby dotenv project (which loads env vars from a .env 
 Intall GoDotEnv documentation
 
 ```sh
-$ go get github.com/joho/godotenv
+go get github.com/joho/godotenv
 ```
 
 #### Getting Gorm
@@ -60,7 +60,7 @@ $ go get github.com/joho/godotenv
 Intall gorm documentation
 
 ```sh
-$ go get -u gorm.io/gorm
+go get -u gorm.io/gorm
 ```
 
 With [Connecting to a Database](https://gorm.io/docs/connecting_to_the_database.html) GORM officially supports the databases MySQL, PostgreSQL, SQLite, SQL Server, and TiDB
@@ -70,19 +70,19 @@ Gorm install with :
 - Mysql database
 
 ```sh
-$ go get -u gorm.io/driver/mysql
+go get -u gorm.io/driver/mysql
 ```
 
 - PostgreSQL database
 
 ```sh
-$ go get gorm.io/driver/postgres
+go get gorm.io/driver/postgres
 ```
 
 - SQLite database
 
 ```sh
-$ go get -u gorm.io/driver/sqlite
+go get -u gorm.io/driver/sqlite
 ```
 #### Logrus
 
@@ -109,7 +109,7 @@ Air is yet another live-reloading command line utility for developing Go applica
 Intall Air documentation
 
 ```sh
-$ go install github.com/cosmtrek/air@latest
+go install github.com/cosmtrek/air@latest
 ```
 
 #### Binary Distributions
