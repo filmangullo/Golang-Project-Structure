@@ -1,8 +1,8 @@
 package config
 
-// import (
-// 	"os"
-// )
+import (
+	"os"
+)
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +13,10 @@ package config
 |
 */
 
-// func environment(key, fallback string) string {
-// 	if value, ok := os.LookupEnv(key); ok {
-// 		return value
-// 	}
+func environment(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
 
-// 	return fallback
-// }
+	return fallback
+}

@@ -3,8 +3,10 @@
 Run the following Git command to download the `git` package:
 
 ```sh
-$ git clone https://github.com/filmangullo/Golang-Project-Structure.git MyProjectGolang
+git clone https://github.com/filmangullo/Golang-Project-Structure.git MyProjectGolang
 ```
+
+Change it and look for all the words `your_project_name` in the file and change them according to your project name.
 
 ### The Go Programming Language
 
@@ -81,6 +83,21 @@ $ go get gorm.io/driver/postgres
 
 ```sh
 $ go get -u gorm.io/driver/sqlite
+```
+#### Logrus
+
+Logrus is a structured logger for Go (golang), completely API compatible with the standard library logger.
+
+```sh
+go get github.com/sirupsen/logrus
+```
+
+#### CORS gin's middleware
+
+Gin middleware/handler to enable CORS support.
+
+```sh
+go get github.com/gin-contrib/cors
 ```
 
 #### Getting Air - Live reload for Go apps

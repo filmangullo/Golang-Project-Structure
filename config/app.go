@@ -1,10 +1,10 @@
 package config
 
-// import (
-// 	"log"
+import (
+	"log"
 
-// 	"github.com/joho/godotenv"
-// )
+	"github.com/joho/godotenv"
+)
 
 /*
 |--------------------------------------------------------------------------
@@ -15,24 +15,24 @@ package config
 |
 */
 
-// type AppConfig struct {
-// 	AppName string
-// 	AppEnv  string
-// 	AppPort string
-// }
+type AppConfig struct {
+	AppName string
+	AppEnv  string
+	AppPort string
+}
 
-// func App() (AppConfig, error) {
-// 	err := godotenv.Load()
-// 	if err != nil {
-// 		log.Fatalf("Failed to load environment variables: %v", err)
-// 		return AppConfig{}, err
-// 	}
+func App() (AppConfig, error) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Failed to load environment variables: %v", err)
+		return AppConfig{}, err
+	}
 
-// 	config := AppConfig{
-// 		AppName: environment("APP_NAME", "Golang Project"),
-// 		AppEnv:  environment("APP_ENV", "development"),
-// 		AppPort: environment("APP_PORT", "8000"),
-// 	}
+	config := AppConfig{
+		AppName: environment("APP_NAME", "Golang Project"),
+		AppEnv:  environment("APP_ENV", "development"),
+		AppPort: environment("APP_PORT", "8000"),
+	}
 
-// 	return config, nil
-// }
+	return config, nil
+}

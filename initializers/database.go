@@ -2,7 +2,7 @@ package initializers
 
 import (
 	"fmt"
-	"startupfundinggolang/database"
+	"your_project_name/database"
 )
 
 func Database() {
