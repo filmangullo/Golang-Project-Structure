@@ -1,1 +1,4 @@
 /tmp
+app.log
+go.mod
+go.sum
