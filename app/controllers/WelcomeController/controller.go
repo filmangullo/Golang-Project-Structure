@@ -7,18 +7,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type WelcomeRequest struct {
-	// Add fields here if needed. For example:
-	// Name string `json:"name" binding:"required"`
-}
-
-// WelcomeExecution handles the welcome request
 func WelcomeExecution(c *gin.Context) {
 	var input WelcomeRequest
 
 	// Parse and validate input JSON
 	if err := c.ShouldBindJSON(&input); err != nil {
-		constants.HandleErrorResponse(c, http.StatusBadRequest, "Invalid input", err.Error())
+		constants.HandleErrorResponse(c, http.StatusBadRequest, "invalid json input", err.Error())
+		return
+	}
+
+	// Parse and validate input Rule
+	if err := ValidateRuleInput(input); err != nil {
+		constants.HandleErrorResponse(c, http.StatusBadRequest, "invalid rule input", err.Error())
 		return
 	}
 
