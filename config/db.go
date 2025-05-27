@@ -16,12 +16,13 @@ import (
 */
 
 type DatabaseConfig struct {
-	DBHost       string
-	DBConnection string
-	DBPort       string
-	DBDatabase   string
-	DBUsername   string
-	DBPassword   string
+	DBAutoMigration string
+	DBHost          string
+	DBConnection    string
+	DBPort          string
+	DBDatabase      string
+	DBUsername      string
+	DBPassword      string
 }
 
 func Database() (DatabaseConfig, error) {
@@ -32,12 +33,13 @@ func Database() (DatabaseConfig, error) {
 	}
 
 	config := DatabaseConfig{
-		DBHost:       environment("DB_HOST", "127.0.0.1"),
-		DBConnection: environment("DB_CONNECTION", "mysql"),
-		DBPort:       environment("DB_PORT", "3306"),
-		DBDatabase:   environment("DB_DATABASE", "go"),
-		DBUsername:   environment("DB_USER", "root"),
-		DBPassword:   environment("DB_PASSWORD", ""),
+		DBAutoMigration: environment("DB_AUTOMIGRATION", "true"),
+		DBHost:          environment("DB_HOST", "127.0.0.1"),
+		DBConnection:    environment("DB_CONNECTION", "mysql"),
+		DBPort:          environment("DB_PORT", "3306"),
+		DBDatabase:      environment("DB_DATABASE", "go"),
+		DBUsername:      environment("DB_USER", "root"),
+		DBPassword:      environment("DB_PASSWORD", ""),
 	}
 
 	return config, nil

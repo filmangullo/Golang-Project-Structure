@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"your_project_name/config"
+	"your_project_name/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
@@ -46,7 +47,10 @@ func ConnectToDatabase() (*gorm.DB, error) {
 	sqlDB.SetMaxOpenConns(100)
 
 	// Perform database migration or other setup tasks if required
-	// db.AutoMigrate(&models.User{})
+	if dbConfig.DBAutoMigration == "true" {
+		db.AutoMigrate(&models.User{})
+
+	}
 	// ...
 
 	return db, nil

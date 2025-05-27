@@ -1,7 +1,7 @@
 package initializers
 
 import (
-	"your_project_name/app/controllers/WelcomeController"
+	"your_project_name/app/controllers/ArticleController"
 	"your_project_name/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -40,7 +40,8 @@ func Api() *gin.Engine {
 	api := router.Group("api/v1")
 	// With access permissions
 	// api := router.Group("api/v1", middleware.AccessPermissionToken)
-	api.GET("welcome", WelcomeController.WelcomeExecution)
+	api.GET("article/post", ArticleController.PostExecution)
+	api.GET("article/get", ArticleController.GetExecution)
 
 	// Define your API routes here
 
