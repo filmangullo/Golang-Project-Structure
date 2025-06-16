@@ -40,7 +40,7 @@ func Api() *gin.Engine {
 	api := router.Group("api/v1")
 	// With access permissions
 	// api := router.Group("api/v1", middleware.AccessPermissionToken)
-	api.GET("article/post", ArticleController.PostExecution)
+	api.POST("article/post", ArticleController.PostExecution)
 	api.GET("article/get", ArticleController.GetExecution)
 
 	// Define your API routes here
