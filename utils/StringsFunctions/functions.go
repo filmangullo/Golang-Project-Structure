@@ -21,6 +21,13 @@ func Lower(s string) string {
 	return strings.ToLower(s) //return the result of strings.ToLower(s) back to whatever called the function.
 }
 
+// The StringsFunctions.StringPointer method converts the given string into a *string.
+func StringPointer(s string) *string {
+	// You can extend this function to modify the string before returning,
+	// for example using strings.ToLower(s).
+	return &s
+}
+
 // The StringsFunctions.ToInt8 method converts the given string to int8:
 func ToInt8(s string) int8 {
 	num, err := strconv.ParseInt(s, 10, 8)

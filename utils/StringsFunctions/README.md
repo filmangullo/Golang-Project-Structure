@@ -9,6 +9,7 @@ however, you are free to use them in your own applications if you find them conv
 - The **`StringsFunctions.After`** method returns everything after the given value in a string. The
   entire string will be returned if the value does not exist within the string:
 - The **`StringsFunctions.Lower`** method converts the given string to lowercase:
+- The **`StringsFunctions.StringPointer`** method converts the given string into a *string:
 - The **`StringsFunctions.ToInt8`** method converts the given string to int8:
 - The **`StringsFunctions.ToInt16`** method converts the given string to int16:
 - The **`StringsFunctions.ToInt32`** method converts the given string to int32:
