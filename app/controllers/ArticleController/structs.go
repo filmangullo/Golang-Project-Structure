@@ -1,5 +1,10 @@
 package ArticleController
 
+import (
+	articleResource "your_project_name/app/resources/articleResource"
+	"your_project_name/utils/PaginateFunctions"
+)
+
 /*
 |--------------------------------------------------------------------------
 | Struct
@@ -16,19 +21,40 @@ package ArticleController
 
 /*
 # -----------------------------------------------------------------------------
-# POST
+# CREATE
 # -----------------------------------------------------------------------------
 */
-type PostRequest struct {
-	// Add fields here if needed. For example:
-	Title    string `json:"title" binding:"required"`
-	Author   string `json:"author" binding:"required"`
-	Email    string `json:"email" binding:"required"`
-	Content  string `json:"content" binding:"required"`
-	PostView int    `json:"postView" binding:"required"`
+type CreateRequest struct {
+	Title       string `json:"title" binding:"required"`
+	Content     string `json:"content" binding:"required"`
+	Author      string `json:"author" binding:"required"`
+	Category    string `json:"category" binding:"required"`
+	Tags        string `json:"tags" binding:"required"`
+	IsPublished *bool  `json:"isPublished" binding:"required"`
 }
 
-type PostResponse struct {
+type CreateResponse struct {
+	articleResource.ArticleArray
+}
+
+/*
+# -----------------------------------------------------------------------------
+# LIST
+# -----------------------------------------------------------------------------
+*/
+type ListRequest struct {
+	Page *int `form:"page"`
+}
+
+type ListResponse struct {
+	Results  any                           `json:"results"`
+	Page     int                           `json:"page"`
+	PerPage  int                           `json:"per_page"`
+	Total    int64                         `json:"total"`
+	LastPage int                           `json:"last_page"`
+	HasNext  bool                          `json:"has_next"`
+	HasPrev  bool                          `json:"has_prev"`
+	Labels   []PaginateFunctions.PageLabel `json:"labels"`
 }
 
 /*
@@ -37,9 +63,28 @@ type PostResponse struct {
 # -----------------------------------------------------------------------------
 */
 type GetRequest struct {
-	// Add fields here if needed. For example:
-	Slug string `form:"slug" binding:"required"`
+	Slug string `json:"slug"`
 }
 
 type GetResponse struct {
+	Results []articleResource.ArticleArray `json:"results"`
+}
+
+/*
+# -----------------------------------------------------------------------------
+# UPDATE
+# -----------------------------------------------------------------------------
+*/
+type UpdateRequest struct {
+	ID          string `json:"id"`
+	Title       string `json:"title" binding:"required"`
+	Content     string `json:"content" binding:"required"`
+	Author      string `json:"author" binding:"required"`
+	Category    string `json:"category" binding:"required"`
+	Tags        string `json:"tags" binding:"required"`
+	IsPublished *bool  `json:"isPublished" binding:"required"`
+}
+
+type UpdateResponse struct {
+	Results articleResource.ArticleArray `json:"results"`
 }

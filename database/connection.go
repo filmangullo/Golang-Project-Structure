@@ -48,6 +48,7 @@ func ConnectToDatabase() (*gorm.DB, error) {
 
 	// Perform database migration or other setup tasks if required
 	if dbConfig.DBAutoMigration == "true" {
+		db.AutoMigrate(&models.Article{})
 		db.AutoMigrate(&models.User{})
 
 	}

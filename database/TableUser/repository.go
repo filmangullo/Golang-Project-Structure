@@ -1,4 +1,4 @@
-package tableuser
+package tableUser
 
 import (
 	"your_project_name/models"
