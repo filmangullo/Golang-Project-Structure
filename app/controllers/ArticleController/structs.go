@@ -88,3 +88,16 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	Results articleResource.ArticleArray `json:"results"`
 }
+
+/*
+# -----------------------------------------------------------------------------
+# DELETE
+# -----------------------------------------------------------------------------
+*/
+type DeleteRequest struct {
+	ID string `json:"id"`
+}
+
+type DeleteResponse struct {
+	Messages map[string]string `json:"messages"`
+}

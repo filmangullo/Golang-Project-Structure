@@ -77,3 +77,20 @@ func ValidateUpdateRequest(in UpdateRequest) map[string]string {
 	}
 	return errors
 }
+
+func ValidateDeleteRequest(in DeleteRequest) map[string]string {
+	errors := make(map[string]string)
+
+	idExists, err := tblArticle.ExistsByWhere("id = ?", in.ID)
+	if err != nil {
+		errors["ID"] = err.Error()
+	}
+	if !idExists {
+		errors["ID"] = "the ID no longer exists, please enter the correct ID."
+	}
+
+	if len(errors) == 0 {
+		return nil
+	}
+	return errors
+}

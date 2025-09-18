@@ -76,13 +76,13 @@ func ListArticleService(input ListRequest) (*ListResponse, error) {
 # -----------------------------------------------------------------------------
 */
 func GetArticleService(input GetRequest) (*GetResponse, error) {
-	getArticle, err := tblArticle.ReadByWhere("slug = ?", input.Slug)
+	article, err := tblArticle.ReadByWhere("slug = ?", input.Slug)
 	if err != nil {
 		return nil, errors.New("failed to get article: " + err.Error())
 	}
 
 	response := GetResponse{
-		articleResource.Resources(getArticle),
+		articleResource.Resources(article),
 	}
 
 	return &response, nil
@@ -94,7 +94,7 @@ func GetArticleService(input GetRequest) (*GetResponse, error) {
 # -----------------------------------------------------------------------------
 */
 func UpdateArticleService(input UpdateRequest) (*UpdateResponse, error) {
-	updateArticle, err := tblArticle.UpdateByID(input.ID, map[string]any{
+	article, err := tblArticle.UpdateByID(input.ID, map[string]any{
 		"title":        input.Title,
 		"slug":         StringsFunctions.Slug(input.Title, '-'),
 		"content":      input.Content,
@@ -108,7 +108,34 @@ func UpdateArticleService(input UpdateRequest) (*UpdateResponse, error) {
 	}
 
 	response := UpdateResponse{
-		articleResource.Resource(updateArticle),
+		articleResource.Resource(article),
+	}
+
+	return &response, nil
+}
+
+/*
+# -----------------------------------------------------------------------------
+# Delete
+# -----------------------------------------------------------------------------
+*/
+func DeleteArticleService(input DeleteRequest) (*DeleteResponse, error) {
+	article, err := tblArticle.DeleteBy(map[string]interface{}{"id": input.ID})
+	if err != nil {
+		return nil, errors.New("failed to delete article: " + err.Error())
+	}
+
+	var msg string
+	if !article {
+		msg = "data has not been successfully deleted"
+	} else {
+		msg = "data deleted successfully"
+	}
+
+	response := DeleteResponse{
+		Messages: map[string]string{
+			"general": msg,
+		},
 	}
 
 	return &response, nil

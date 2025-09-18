@@ -190,3 +190,47 @@ func UpdateExecution(c *gin.Context) {
 	response := constants.ResponseFormatter(http.StatusText(http.StatusOK), http.StatusOK, "success", results)
 	c.JSON(http.StatusOK, response)
 }
+
+func DeleteExecution(c *gin.Context) {
+	var input DeleteRequest
+
+	// Parse and validate input Query
+	if err := c.ShouldBindJSON(&input); err != nil {
+		errorDetails := constants.FormatValidationError(err)
+		response := constants.ResponseFormatter("invalid query input.", http.StatusBadRequest, "error", gin.H{"errors": errorDetails})
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	// Parse and validate slug path
+	if !StringsFunctions.IsSlug(c.Param("id")) {
+		errorDetails := gin.H{
+			"ID": "must be a number and cannot be any other character",
+		}
+		response := constants.ResponseFormatter("invalid path format.", http.StatusBadRequest, "error", gin.H{"errors": errorDetails})
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	} else {
+		input.ID = c.Param("id")
+	}
+
+	// Parse and validate input Rule
+	if err := ValidateDeleteRequest(input); err != nil {
+		response := constants.ResponseFormatter("invalid rule input.", http.StatusBadRequest, "error", gin.H{"errors": err})
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	// Call service logic
+	results, err := DeleteArticleService(input)
+	if err != nil {
+		errorDetails := constants.FormatValidationError(err)
+		response := constants.ResponseFormatter("an error occurred while executing the service.", http.StatusBadRequest, "error", gin.H{"errors": errorDetails})
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+
+	// Return successful response
+	response := constants.ResponseFormatter(http.StatusText(http.StatusOK), http.StatusOK, "success", results)
+	c.JSON(http.StatusOK, response)
+}

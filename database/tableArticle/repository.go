@@ -33,6 +33,10 @@ type DatabaseTableArticle interface {
 	// UPDATE
 	UpdateByID(id interface{}, fields map[string]interface{}) (models.Article, error)
 	UpdateBySlug(slug string, fields map[string]interface{}) (models.Article, error)
+
+	// DELETE
+	DeleteBy(fields map[string]interface{}) (bool, error)
+	DeleteWhere(condition string, args ...interface{}) (bool, error)
 }
 
 type articleRepository struct {
@@ -193,4 +197,20 @@ func (r *articleRepository) UpdateBySlug(slug string, fields map[string]interfac
 	})
 
 	return updated, err
+}
+
+// ====== DELETE ======
+func (r *articleRepository) DeleteBy(fields map[string]interface{}) (bool, error) {
+	if len(fields) == 0 {
+		return false, nil
+	}
+	tx := r.db.Where(fields).Delete(&models.Article{})
+
+	return tx.RowsAffected > 0, tx.Error
+}
+
+func (r *articleRepository) DeleteWhere(condition string, args ...interface{}) (bool, error) {
+	tx := r.db.Where(condition, args...).Delete(&models.Article{})
+
+	return tx.RowsAffected > 0, tx.Error
 }

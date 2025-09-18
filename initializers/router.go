@@ -40,10 +40,11 @@ func Api() *gin.Engine {
 	api := router.Group("api/v1")
 	// With access permissions
 	// api := router.Group("api/v1", middleware.AccessPermissionToken)
-	api.POST("articles", ArticleController.CreateExecution)    //create
-	api.GET("articles", ArticleController.ListExecution)       //get
-	api.GET("articles/:slug", ArticleController.GetExecution)  //find
-	api.PUT("articles/:id", ArticleController.UpdateExecution) //update
+	api.POST("articles", ArticleController.CreateExecution)       //create
+	api.GET("articles", ArticleController.ListExecution)          //get
+	api.GET("articles/:slug", ArticleController.GetExecution)     //find
+	api.PUT("articles/:id", ArticleController.UpdateExecution)    //update
+	api.DELETE("articles/:id", ArticleController.DeleteExecution) //delete
 
 	// Define your API routes here
 
