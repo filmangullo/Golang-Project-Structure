@@ -12,6 +12,7 @@ type DatabaseTableArticle interface {
 	Create(article models.Article) (models.Article, error)
 
 	// READ
+	ReadAll() ([]models.Article, error)
 	ReadByWhere(condition string, args ...interface{}) ([]models.Article, error)
 	ReadFirstByWhere(condition string, args ...interface{}) (models.Article, error)
 	ReadWhereByPaginate(opts PaginateFunctions.QueryOptions) (PaginateFunctions.PageResult[models.Article], error)
@@ -58,15 +59,26 @@ func (r *articleRepository) Create(article models.Article) (models.Article, erro
 }
 
 // ====== READ ======
+func (r *articleRepository) ReadAll() ([]models.Article, error) {
+	var articles []models.Article
+	err := r.db.Find(&articles).Error
+	if err != nil {
+		return nil, err
+	}
+	return articles, nil
+}
+
 func (r *articleRepository) ReadByWhere(condition string, args ...interface{}) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(condition, args...).Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) ReadFirstByWhere(condition string, args ...interface{}) (models.Article, error) {
 	var article models.Article
 	err := r.db.Where(condition, args...).First(&article).Error
+
 	return article, err
 }
 
@@ -78,30 +90,35 @@ func (r *articleRepository) ReadWhereByPaginate(opts PaginateFunctions.QueryOpti
 func (r *articleRepository) ReadWhereIn(column string, values interface{}) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(column+" IN ?", values).Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) ReadWhereNotIn(column string, values interface{}) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(column+" NOT IN ?", values).Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) ReadWhereBetween(column string, from, to interface{}) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(column+" BETWEEN ? AND ?", from, to).Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) ReadWhereNull(column string) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(column + " IS NULL").Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) ReadWhereNotNull(column string) ([]models.Article, error) {
 	var articles []models.Article
 	err := r.db.Where(column + " IS NOT NULL").Find(&articles).Error
+
 	return articles, err
 }
 
@@ -113,18 +130,21 @@ func (r *articleRepository) ReadSearchLike(keyword string, cols ...string) ([]mo
 		tx = tx.Scopes(PaginateFunctions.ScopeSearchLike(keyword, cols...))
 	}
 	err := tx.Find(&articles).Error
+
 	return articles, err
 }
 
 func (r *articleRepository) CountByWhere(condition string, args ...interface{}) (int64, error) {
 	var total int64
 	err := r.db.Model(&models.Article{}).Where(condition, args...).Count(&total).Error
+
 	return total, err
 }
 
 func (r *articleRepository) ExistsByWhere(condition string, args ...interface{}) (bool, error) {
 	var total int64
 	err := r.db.Model(&models.Article{}).Where(condition, args...).Limit(1).Count(&total).Error
+
 	return total > 0, err
 }
 
@@ -143,6 +163,7 @@ func (r *articleRepository) ReadSelectOrder(selectExpr, orderBy string, conditio
 		tx = tx.Order(orderBy)
 	}
 	err := tx.Find(&articles).Error
+
 	return articles, err
 }
 
@@ -157,6 +178,7 @@ func (r *articleRepository) ReadWith(preloads []string, condition string, args .
 		tx = tx.Where(condition, args...)
 	}
 	err := tx.Find(&articles).Error
+
 	return articles, err
 }
 
