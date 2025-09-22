@@ -147,6 +147,12 @@ func ToInt8(s string) int8 {
 	return int8(num)
 }
 
+// The StringsFunctions.Int8ToPointer method converts the given int8 to int8 pointer:
+func Int8ToPointer(i int8) *int8 {
+
+	return &i
+}
+
 // The StringsFunctions.ToInt16 method converts the given string to int16:
 func ToInt16(s string) int16 {
 	num, err := strconv.ParseInt(s, 10, 16)
@@ -155,6 +161,12 @@ func ToInt16(s string) int16 {
 		return math.MinInt16
 	}
 	return int16(num)
+}
+
+// The StringsFunctions.Int16ToPointer method converts the given int16 to int16 pointer:
+func Int16ToPointer(i int16) *int16 {
+
+	return &i
 }
 
 // The StringsFunctions.ToInt32 method converts the given string to int32:
@@ -167,6 +179,12 @@ func ToInt32(s string) int32 {
 	return int32(num)
 }
 
+// The StringsFunctions.Int32ToPointer method converts the given int32 to int32 pointer:
+func Int32ToPointer(i int32) *int32 {
+
+	return &i
+}
+
 // The StringsFunctions.ToInt64 method converts the given string to int64:
 func ToInt64(s string) int64 {
 	num, err := strconv.ParseInt(s, 10, 64)
@@ -175,6 +193,12 @@ func ToInt64(s string) int64 {
 		return math.MinInt64
 	}
 	return num
+}
+
+// The StringsFunctions.Int64ToPointer method converts the given int64 to int64 pointer:
+func Int64ToPointer(i int64) *int64 {
+
+	return &i
 }
 
 // The StringsFunctions.ToInt method converts the given string to int:
@@ -186,4 +210,10 @@ func ToInt(s string) int {
 	}
 	// Return the converted integer if no error occurred
 	return num
+}
+
+// The StringsFunctions.IntToPointer method converts the given int to int pointer:
+func IntToPointer(i int) *int {
+
+	return &i
 }

@@ -18,7 +18,12 @@ however, you are free to use them in your own applications if you find them conv
 - The **`StringsFunctions.Slug`** method method generates a URL friendly "slug" from the given string:
 - The **`StringsFunctions.StringPointer`** method converts the given string into a *string:
 - The **`StringsFunctions.ToInt8`** method converts the given string to int8:
+- The **`StringsFunctions.Int8ToPointer`** method converts the given int8 to int8 pointer:
 - The **`StringsFunctions.ToInt16`** method converts the given string to int16:
+- The **`StringsFunctions.Int16ToPointer`** method converts the given int16 to int16 pointer:
 - The **`StringsFunctions.ToInt32`** method converts the given string to int32:
+- The **`StringsFunctions.Int32ToPointer`** method converts the given int32 to int32 pointer:
 - The **`StringsFunctions.ToInt64`** method converts the given string to int64:
+- The **`StringsFunctions.Int64ToPointer`** method converts the given int64 to int64 pointer:
 - The **`StringsFunctions.ToInt`** method converts the given string to int:
+- The **`StringsFunctions.IntToPointer`** method converts the given int to int pointer:
