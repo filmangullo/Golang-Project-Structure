@@ -1,4 +1,8 @@
 # `/services`
 
-Contains services that has the logic for doing all the processing like manipulation DB and giving back the desired results
+Contains services that have the logic to perform all processing such as Database manipulation, Http Client and return the desired results.
 
+📂 services
+ ┣ 📂 http
+ ┣ 📂 internal
+ ┗ 📄 README.md
