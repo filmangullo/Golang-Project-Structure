@@ -1,4 +1,4 @@
-package LoggerFunctions
+package constants
 
 import (
 	"os"

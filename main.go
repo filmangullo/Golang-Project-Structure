@@ -4,10 +4,11 @@ import (
 	"log"
 	"your_project_name/config"
 	"your_project_name/initializers"
-	"your_project_name/utils/LoggerFunctions"
 )
 
 func init() {
+	// Call the Root function from the initializers package
+	initializers.Root()
 	// Call the Database function from the initializers package
 	initializers.Database()
 }
@@ -18,8 +19,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Failed to load application configuration: %v", err)
 	}
-
-	LoggerFunctions.Log.Info("Starting application")
 
 	// Initialize the router
 	r := initializers.Api()
