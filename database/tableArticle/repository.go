@@ -10,12 +10,17 @@ import (
 
 type DatabaseTableArticle interface {
 	// CREATE
-	Create(row models.Article) (models.Article, error)
+	Create(fields models.Article) (models.Article, error)
 
 	// READ
 	ReadAll() ([]models.Article, error)
 	ReadByWhere(condition string, args ...interface{}) ([]models.Article, error)
-	ReadFirstByWhere(condition string, args ...interface{}) (models.Article, error)
+	ReadFirstBy(orderBy string) (models.Article, error)
+	ReadFirstWhere(condition string, args ...interface{}) (models.Article, error)
+	ReadFirstByWhere(orderBy string, condition string, args ...interface{}) (models.Article, error)
+	ReadLastBy(orderBy string) (models.Article, error)
+	ReadLastWhere(condition string, args ...interface{}) (models.Article, error)
+	ReadLastByWhere(orderBy string, condition string, args ...interface{}) (models.Article, error)
 	ReadWhereByPaginate(opts PaginateFunctions.QueryOptions) (PaginateFunctions.PageResult[models.Article], error)
 
 	// READ additionally
@@ -51,13 +56,13 @@ func CallArticleRepository(db *gorm.DB) *articleRepository {
 }
 
 // ====== CREATE ======
-func (r *articleRepository) Create(row models.Article) (models.Article, error) {
-	err := r.db.Create(&row).Error
+func (r *articleRepository) Create(fields models.Article) (models.Article, error) {
+	err := r.db.Create(&fields).Error
 	if err != nil {
-		return row, err
+		return fields, err
 	}
 
-	return row, nil
+	return fields, nil
 }
 
 // ====== READ ======
@@ -77,10 +82,79 @@ func (r *articleRepository) ReadByWhere(condition string, args ...interface{}) (
 	return rows, err
 }
 
-func (r *articleRepository) ReadFirstByWhere(condition string, args ...interface{}) (models.Article, error) {
+// FIRST by dynamic column (tanpa WHERE)
+// usage: first, err := repo.ReadFirstBy("updated_at")
+func (r *articleRepository) ReadFirstBy(orderBy string) (models.Article, error) {
+	var row models.Article
+	err := r.db.
+		Model(&models.Article{}).
+		Order(orderBy + " ASC").
+		Limit(1).
+		Take(&row).Error
+	return row, err
+}
+
+// First based on PK (smallest ID)
+// usage: row, err := repo.ReadFirstByWhere("status = ?", "published")
+// usage: row, err := repo.ReadFirstByWhere("user_id = ?", user.ID)
+func (r *articleRepository) ReadFirstWhere(condition string, args ...interface{}) (models.Article, error) {
 	var row models.Article
 	err := r.db.Where(condition, args...).First(&row).Error
 
+	return row, err
+}
+
+// FIRST by dynamic column + WHERE (signature simple)
+// usage: row, err := repo.ReadFirstByWhere("updated_at", "status = ?", "published")
+// usage: row, err := repo.ReadFirstByWhere("updated_at", "status = ? AND author_id", "published", author.ID)
+func (r *articleRepository) ReadFirstByWhere(orderBy string, condition string, args ...interface{}) (models.Article, error) {
+	var row models.Article
+	tx := r.db.Model(&models.Article{})
+	if condition != "" {
+		tx = tx.Where(condition, args...)
+	}
+	err := tx.
+		Order(orderBy + " ASC").
+		Limit(1).
+		Take(&row).Error
+	return row, err
+}
+
+// Last by dynamic column (tanpa WHERE)
+// usage: row, err := repo.ReadLastBy("updated_at")
+func (r *articleRepository) ReadLastBy(orderBy string) (models.Article, error) {
+	var row models.Article
+	err := r.db.
+		Model(&models.Article{}).
+		Order(orderBy + " DESC").
+		Limit(1).
+		Take(&row).Error
+	return row, err
+}
+
+// Last based on PK (largest ID)
+// usage: row, err := repo.ReadLastByWhere("status = ?", "published")
+// usage: row, err := repo.ReadLastByWhere("user_id = ?", user.ID)
+func (r *articleRepository) ReadLastWhere(condition string, args ...interface{}) (models.Article, error) {
+	var row models.Article
+	err := r.db.Where(condition, args...).Last(&row).Error
+
+	return row, err
+}
+
+// LAST by dynamic column + WHERE (signature simple)
+// usage: row, err := repo.ReadLastByWhere("updated_at", "status = ?", "published")
+// usage: row, err := repo.ReadLastByWhere("updated_at", "status = ? AND author_id", "published", author.ID)
+func (r *articleRepository) ReadLastByWhere(orderBy string, condition string, args ...interface{}) (models.Article, error) {
+	var row models.Article
+	tx := r.db.Model(&models.Article{})
+	if condition != "" {
+		tx = tx.Where(condition, args...)
+	}
+	err := tx.
+		Order(orderBy + " DESC").
+		Limit(1).
+		Take(&row).Error
 	return row, err
 }
 
