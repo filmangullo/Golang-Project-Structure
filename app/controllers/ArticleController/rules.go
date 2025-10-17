@@ -17,80 +17,80 @@ import (
 */
 
 func ValidateCreateRequest(in CreateRequest) map[string]string {
-	errors := make(map[string]string)
+	rule_err := make(map[string]string)
 
 	if len(strings.TrimSpace(in.Title)) < 2 {
-		errors["Title"] = "title must be at least 2 characters"
+		rule_err["Title"] = "title must be at least 2 characters"
 	}
 
 	if in.IsPublished == nil {
-		errors["IsPublished"] = "is published is required"
+		rule_err["IsPublished"] = "is published is required"
 	}
 
-	if len(errors) == 0 {
+	if len(rule_err) == 0 {
 		return nil
 	}
-	return errors
+	return rule_err
 }
 
 func ValidateListRequest(in ListRequest) map[string]string {
-	errors := make(map[string]string)
+	rule_err := make(map[string]string)
 
 	if in.Page != nil {
 		if *in.Page <= 0 {
-			errors["Page"] = "page must be greater than 0"
+			rule_err["Page"] = "page must be greater than 0"
 		}
 	}
 
-	if len(errors) == 0 {
+	if len(rule_err) == 0 {
 		return nil
 	}
-	return errors
+	return rule_err
 }
 
 func ValidateGetRequest(in GetRequest) map[string]string {
-	errors := make(map[string]string)
+	rule_err := make(map[string]string)
 
-	if len(errors) == 0 {
+	if len(rule_err) == 0 {
 		return nil
 	}
-	return errors
+	return rule_err
 }
 
 func ValidateUpdateRequest(in UpdateRequest) map[string]string {
-	errors := make(map[string]string)
+	rule_err := make(map[string]string)
 
 	if len(strings.TrimSpace(in.Title)) < 2 {
-		errors["Title"] = "title must be at least 2 characters"
+		rule_err["Title"] = "title must be at least 2 characters"
 	}
 
 	titleExists, err := tblArticle.ExistsByWhere("title = ? AND id != ?", in.Title, in.ID)
 	if err != nil {
-		errors["Title"] = err.Error()
+		rule_err["Title"] = err.Error()
 	}
 	if titleExists {
-		errors["Title"] = "the title is available, please do not duplicate the title"
+		rule_err["Title"] = "the title is available, please do not duplicate the title"
 	}
 
-	if len(errors) == 0 {
+	if len(rule_err) == 0 {
 		return nil
 	}
-	return errors
+	return rule_err
 }
 
 func ValidateDeleteRequest(in DeleteRequest) map[string]string {
-	errors := make(map[string]string)
+	rule_err := make(map[string]string)
 
 	idExists, err := tblArticle.ExistsByWhere("id = ?", in.ID)
 	if err != nil {
-		errors["ID"] = err.Error()
+		rule_err["ID"] = err.Error()
 	}
 	if !idExists {
-		errors["ID"] = "the ID no longer exists, please enter the correct ID."
+		rule_err["ID"] = "the ID no longer exists, please enter the correct ID."
 	}
 
-	if len(errors) == 0 {
+	if len(rule_err) == 0 {
 		return nil
 	}
-	return errors
+	return rule_err
 }
