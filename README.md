@@ -112,6 +112,12 @@ Intall Air documentation
 go install github.com/cosmtrek/air@latest
 ```
 
+With go 1.25 or higher:
+
+```sh
+go install github.com/air-verse/air@latest
+```
+
 #### Binary Distributions
 
 Official binary distributions are available at https://go.dev/dl/.
