@@ -31,6 +31,9 @@ type DatabaseTableArticle interface {
 	ReadWhereNotNull(column ...string) ([]models.Article, error)
 	ReadByWhereAndNull(condition string, args []interface{}, nullFields ...string) ([]models.Article, error)
 	ReadSearchLike(keyword string, cols ...string) ([]models.Article, error)
+	ReadSearchLikeLimit(keyword string, limit int, cols ...string) ([]models.Article, error)
+	ReadSearchLikeLimitWhere(keyword string, limit int, condition string, args []interface{}, cols ...string) ([]models.Article, error)
+
 	CountByWhere(condition string, args ...interface{}) (int64, error)
 	ExistsByWhere(condition string, args ...interface{}) (bool, error)
 
@@ -233,6 +236,80 @@ func (r *articleRepository) ReadSearchLike(keyword string, cols ...string) ([]mo
 	}
 	err := tx.Find(&rows).Error
 
+	return rows, err
+}
+
+// ReadSearchLikeLimit retrieves articles with optional LIKE search
+// and result limit.
+//
+// Example:
+//
+//	articles, err := table.ReadSearchLikeLimit(
+//		input.Search,
+//		100,
+//		"name",
+//		"mg_bedbank_name",
+//		"mg_bedbank_code",
+//	)
+//	if err != nil {
+//		return nil, errors.New("failed to get article: " + err.Error())
+//	}
+func (r *articleRepository) ReadSearchLikeLimit(keyword string, limit int, cols ...string) ([]models.Article, error) {
+	var rows []models.Article
+
+	tx := r.db.Model(&models.Article{})
+	if keyword != "" && len(cols) > 0 {
+		tx = tx.Scopes(
+			PaginateFunctions.ScopeSearchLike(keyword, cols...),
+		)
+	}
+	if limit > 0 {
+		tx = tx.Limit(limit)
+	}
+	err := tx.Find(&rows).Error
+	return rows, err
+}
+
+// ReadSearchLikeLimitWhere retrieves articles with optional LIKE search,
+// optional WHERE condition, and an optional result limit.
+//
+// Usage:
+//
+//	// Search by name, bedbank name, or bedbank code
+//	articles, err := table.ReadSearchLikeLimitWhere(
+//		input.Search,
+//		100,
+//		"mg_bedbank_code IS NOT NULL",
+//		nil,
+//		"title",
+//		"description",
+//	)
+//	if err != nil {
+//		return nil, errors.New("failed to get article: " + err.Error())
+//	}
+//
+// Behavior:
+//   - keyword empty  -> returns data without LIKE filtering.
+//   - keyword filled -> searches keyword using LIKE on the specified columns.
+//   - condition empty -> no WHERE condition is applied.
+//   - condition filled -> applies the specified WHERE condition.
+//   - limit <= 0     -> no LIMIT is applied.
+func (r *articleRepository) ReadSearchLikeLimitWhere(keyword string, limit int, condition string, args []interface{}, cols ...string) ([]models.Article, error) {
+	var rows []models.Article
+	tx := r.db.Model(&models.Article{})
+
+	if condition != "" {
+		tx = tx.Where(condition, args...)
+	}
+	if keyword != "" && len(cols) > 0 {
+		tx = tx.Scopes(
+			PaginateFunctions.ScopeSearchLike(keyword, cols...),
+		)
+	}
+	if limit > 0 {
+		tx = tx.Limit(limit)
+	}
+	err := tx.Find(&rows).Error
 	return rows, err
 }
 
