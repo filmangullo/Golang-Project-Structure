@@ -15,6 +15,7 @@ type DatabaseTableArticle interface {
 	// READ
 	ReadAll() ([]models.Article, error)
 	ReadByWhere(condition string, args ...interface{}) ([]models.Article, error)
+	ReadByWhereLimit(condition string, limit int, args ...interface{}) ([]models.Article, error)
 	ReadFirstBy(orderBy string) (models.Article, error)
 	ReadFirstWhere(condition string, args ...interface{}) (models.Article, error)
 	ReadFirstByWhere(orderBy string, condition string, args ...interface{}) (models.Article, error)
@@ -81,6 +82,17 @@ func (r *articleRepository) ReadAll() ([]models.Article, error) {
 func (r *articleRepository) ReadByWhere(condition string, args ...interface{}) ([]models.Article, error) {
 	var rows []models.Article
 	err := r.db.Where(condition, args...).Find(&rows).Error
+
+	return rows, err
+}
+
+func (r *articleRepository) ReadByWhereLimit(condition string, limit int, args ...interface{}) ([]models.Article, error) {
+	var rows []models.Article
+	query := r.db.Where(condition, args...)
+	if limit > 0 {
+		query = query.Limit(limit)
+	}
+	err := query.Find(&rows).Error
 
 	return rows, err
 }
